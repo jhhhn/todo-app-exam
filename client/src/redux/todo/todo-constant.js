@@ -1,0 +1,12 @@
+const TodoConstant = {
+  TODOS_REQUEST: 'TODOS_REQUEST',
+
+  TODOS_ADD: 'TODOS_ADD',
+  GET_TODOS: 'GET_TODOS',
+  TODOS_UPDATE: 'TODOS_UPDATE',
+  TODOS_DELETE: 'TODOS_DELETE',
+
+  TODOS_FAIL: 'TODOS_FAIL',
+}
+
+export default TodoConstant
