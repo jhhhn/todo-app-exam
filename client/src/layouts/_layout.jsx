@@ -1,12 +1,12 @@
 import React from 'react'
 import Footer from './footer'
-import Header from './header'
+import Nav from './nav'
 
 const Layout = ({ children }) => {
   return (
-    <div>
-      <Header />
-      <main>{children}</main>
+    <div className='font-mono  m-4'>
+      <Nav />
+      <main className='min-h-screen pt-8'>{children}</main>
       <Footer />
     </div>
   )

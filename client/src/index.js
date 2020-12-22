@@ -5,8 +5,12 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 import './styles/index.css'
 
+import axios from 'axios'
 import Routes from './routes'
 import reportWebVitals from './reportWebVitals'
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
+axios.defaults.headers.get['Accept'] = 'application/json'
+axios.defaults.headers.post['Accept'] = 'application/json'
 
 ReactDOM.render(
   <Provider store={store}>

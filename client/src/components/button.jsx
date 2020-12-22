@@ -7,7 +7,11 @@ const CustomBtn = (props) => {
     switch (props.type) {
       case 'link':
         template = (
-          <Link className='btn btn--link' to={props.linkTo}>
+          <Link
+            className={props.className}
+            disabled={props.disabled}
+            to={props.linkTo}
+          >
             {props.title}
           </Link>
         )
@@ -15,13 +19,23 @@ const CustomBtn = (props) => {
       case 'button':
         template = (
           <button
-            className='btn btn--button'
+            className={props.className}
             onClick={() => {
               props.runAction()
             }}
           >
             {props.title}
           </button>
+        )
+        break
+
+      case 'submit':
+        template = (
+          <input
+            type='submit'
+            className={props.className}
+            value={props.title}
+          />
         )
         break
 

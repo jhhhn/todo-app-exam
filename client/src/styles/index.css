@@ -1,5 +1,11 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+.card {
+  @apply bg-white shadow rounded-md my-4 p-4;
+}
+
+.btn {
+  @apply p-1 m-1 rounded uppercase hover:shadow-inner text-gray-100 text-sm tracking-widest;
+}

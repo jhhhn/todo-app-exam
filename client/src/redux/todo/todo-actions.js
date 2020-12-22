@@ -1,14 +1,29 @@
 import Axios from 'axios'
 import TodoConstant from './todo-constant'
 
-export const addTodo = (todo) => ({
-  type: TodoConstant.TODOS_ADD,
-  payload: todo,
-})
+export const addTodo = (todo) => async (dispatch) => {
+  dispatch({
+    type: TodoConstant.TODOS_REQUEST,
+  })
+  dispatch({
+    type: TodoConstant.TODOS_ADD,
+    payload: todo,
+  })
+}
 
-export const updateTodo = (id) => ({
+export const completeTodo = (id) => async (dispatch) => {
+  dispatch({
+    type: TodoConstant.TODOS_REQUEST,
+  })
+  dispatch({
+    type: TodoConstant.TODOS_MARKCOMPLETE,
+    payload: id,
+  })
+}
+
+export const updateTodo = (dataToUpdate) => ({
   type: TodoConstant.TODOS_UPDATE,
-  payload: id,
+  payload: dataToUpdate,
 })
 
 export const deleteTodo = (id) => ({
@@ -21,9 +36,7 @@ export const getTodos = () => async (dispatch) => {
     dispatch({
       type: TodoConstant.TODOS_REQUEST,
     })
-    const { data } = await Axios.get(
-      'https://jsonplaceholder.typicode.com/todos?_limit=5'
-    )
+    const { data } = await Axios.get('/todos?_limit=5')
     dispatch({
       type: TodoConstant.GET_TODOS,
       payload: data,

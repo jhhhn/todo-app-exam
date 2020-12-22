@@ -1,8 +1,10 @@
 import TodoConstant from './todo-constant'
-import { todoDelete, todoUpdate } from './todo-utils'
+import { todoDelete, todoUpdate, addTodo, markComplete } from './todo-utils'
 
 const INITIAL_STATE = {
   todos: [],
+  loading: false,
+  success: false,
 }
 
 const todos = (state = INITIAL_STATE, { type, payload }) => {
@@ -17,13 +19,15 @@ const todos = (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         todos: [...payload],
+        success: true,
         loading: false,
       }
 
     case TodoConstant.TODOS_ADD:
       return {
         ...state,
-        todos: payload,
+        todos: addTodo(state.todos, payload),
+        success: true,
         loading: false,
       }
 
@@ -31,6 +35,14 @@ const todos = (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         todos: todoUpdate(state.todos, payload),
+        success: true,
+        loading: false,
+      }
+
+    case TodoConstant.TODOS_MARKCOMPLETE:
+      return {
+        ...state,
+        todos: markComplete(state.todos, payload),
         loading: false,
       }
 
@@ -38,6 +50,7 @@ const todos = (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         todos: todoDelete(state.todos, payload),
+        success: true,
         loading: false,
       }
 
@@ -45,6 +58,7 @@ const todos = (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         error: 'Error in todo',
+        success: false,
         loading: false,
       }
 
