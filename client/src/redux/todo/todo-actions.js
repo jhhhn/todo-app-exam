@@ -31,41 +31,23 @@ export const deleteTodo = (id) => ({
   payload: id,
 })
 
-export const getTodos = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: TodoConstant.TODOS_REQUEST,
-    })
-    const { data } = await Axios.get('/todos?_limit=5')
-    dispatch({
-      type: TodoConstant.GET_TODOS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: TodoConstant.TODOS_FAIL,
-      payload: error.response && error.message,
-    })
-  }
-}
-
-export const filterTodo = (isComplete) => async (dispatch) => {
+export const getTodos = (isComplete) => async (dispatch) => {
   try {
     dispatch({
       type: TodoConstant.TODOS_REQUEST,
     })
     if (isComplete !== null) {
       const { data } = await Axios.get(
-        `/todos?completed=${isComplete}&_limit=5`
+        `/todos?completed=${isComplete}&_limit=10`
       )
       dispatch({
-        type: TodoConstant.TODOS_FILTER,
+        type: TodoConstant.GET_TODOS,
         payload: data,
       })
     } else {
-      const { data } = await Axios.get(`/todos?_limit=5`)
+      const { data } = await Axios.get(`/todos?_limit=10`)
       dispatch({
-        type: TodoConstant.TODOS_FILTER,
+        type: TodoConstant.GET_TODOS,
         payload: data,
       })
     }

@@ -37,8 +37,3 @@ export const markComplete = (prevTodos, id) => {
 
   return newTodos
 }
-
-export const todoFilter = (prevTodos, data) => {
-  const newTodos = prevTodos.filter((i) => i.completed !== data)
-  return newTodos
-}

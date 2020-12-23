@@ -22,7 +22,7 @@ const Index = () => {
   })
 
   useEffect(() => {
-    dispatch(getTodos())
+    dispatch(getTodos(null))
   }, [])
 
   const openModal = (data) => {

@@ -48,7 +48,7 @@ const List = ({ todos, setUpdateTodo }) => {
                 className='btn bg-green-500  hover:bg-opacity-80'
                 type={'button'}
                 runAction={() => handleMarkComplete(i.id)}
-                title={'Complete'}
+                title={`${i.completed ? 'Undone' : 'Done'}`}
               />
             </div>
           </li>
