@@ -35,7 +35,7 @@ const List = ({ todos, setUpdateTodo }) => {
               <CustomBtn
                 className='btn bg-blue-500 hover:bg-opacity-80 '
                 type={'button'}
-                runAction={() => setUpdateTodo(i)}
+                runAction={() => setUpdateTodo({ ...i, edit: true })}
                 title={'update'}
               />
               <CustomBtn

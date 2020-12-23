@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTodos, updateTodo } from '../redux/todo/todo-actions'
+import { addTodo, getTodos, updateTodo } from '../redux/todo/todo-actions'
 import List from '../components/list'
-import TodoForm from '../components/todo-form'
 import Loading from '../components/loading'
 import Modal from '../components/modal'
 import CustomBtn from '../components/button'
@@ -16,6 +15,7 @@ const Index = () => {
   const { loading, todos, error } = todosState
 
   const [dataTodo, setDataTodo] = useState({
+    edit: false,
     id: '',
     title: '',
     completed: false,
@@ -40,22 +40,54 @@ const Index = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(updateTodo(dataTodo))
-    closeModal()
+    if (dataTodo.edit) {
+      dispatch(
+        updateTodo({
+          id: dataTodo.id,
+          title: dataTodo.title,
+          completed: dataTodo.completed,
+        })
+      )
+      closeModal()
+      setDataTodo({
+        edit: false,
+        id: '',
+        title: '',
+        completed: false,
+      })
+    } else {
+      dispatch(addTodo(dataTodo.title))
+      closeModal()
+      setDataTodo({
+        edit: false,
+        id: '',
+        title: '',
+        completed: false,
+      })
+    }
   }
 
   return (
     <div>
       <header>
-        <div className='text-gray-700 text-3xl uppercase flex align-end justify-items-start mb-4'>
+        <div className='text-gray-700 text-3xl uppercase flex align-end justify-between mb-4'>
           <h2 className='flex items-center'>
             <span className='font-semibold  mr-2'>My</span>
             Todos
           </h2>
+          <CustomBtn
+            className='p-2 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none bg-blue-500 text-gray-200 font-extrabold
+           tracking-widest m3'
+            type={'button'}
+            title={'Add todo'}
+            runAction={() =>
+              openModal({
+                edit: false,
+              })
+            }
+          />
         </div>
       </header>
-
-      <TodoForm dataTodo={dataTodo} />
 
       <Filter />
 
@@ -84,7 +116,7 @@ const Index = () => {
               <CustomBtn
                 className='p-4 ml-4 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none'
                 type={'submit'}
-                title={'Update'}
+                title={`${dataTodo.edit ? 'Update' : 'Add'}`}
                 onSubmit={(e) => handleSubmit(e)}
               />
             </div>
