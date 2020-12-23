@@ -48,3 +48,21 @@ export const getTodos = () => async (dispatch) => {
     })
   }
 }
+
+export const filterTodo = (isComplete) => async (dispatch) => {
+  try {
+    dispatch({
+      type: TodoConstant.TODOS_REQUEST,
+    })
+    const { data } = await Axios.get(`/todos?completed=${isComplete}&_limit=5`)
+    dispatch({
+      type: TodoConstant.TODOS_FILTER,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: TodoConstant.TODOS_FAIL,
+      payload: error.response && error.message,
+    })
+  }
+}

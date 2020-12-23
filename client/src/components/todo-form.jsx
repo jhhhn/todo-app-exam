@@ -4,7 +4,7 @@ import { addTodo, updateTodo } from '../redux/todo/todo-actions'
 import CustomBtn from './button'
 import InputText from './input_text'
 
-const TodoForm = ({ dataTodo }) => {
+const TodoForm = () => {
   const dispatch = useDispatch()
 
   const [state, setstate] = useState({
@@ -14,15 +14,6 @@ const TodoForm = ({ dataTodo }) => {
     completed: false,
   })
 
-  useEffect(() => {
-    if (dataTodo && dataTodo.title) {
-      setstate({
-        edit: true,
-        ...dataTodo,
-      })
-    }
-  }, [dataTodo])
-
   const handleChange = (e) => {
     const value = e.target.value
     setstate({ ...state, title: value })
@@ -30,19 +21,8 @@ const TodoForm = ({ dataTodo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (state.edit) {
-      dispatch(
-        updateTodo({
-          id: state.id,
-          title: state.title,
-          completed: state.completed,
-        })
-      )
-      setstate({ edit: false, id: '', title: '', completed: false })
-    } else {
-      dispatch(addTodo(state.title))
-      setstate({ edit: false, id: '', title: '', completed: false })
-    }
+    dispatch(addTodo(state.title))
+    setstate({ edit: false, id: '', title: '', completed: false })
   }
 
   return (
@@ -55,9 +35,10 @@ const TodoForm = ({ dataTodo }) => {
           className='card p-4 w-60 md:w-96'
         />
         <CustomBtn
-          className='p-4 ml-4 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none'
+          className='p-2 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none bg-blue-500 text-gray-200 font-extrabold
+           text-xl tracking-widest'
           type={'submit'}
-          title={`${state.edit ? 'Update' : 'Add'}`}
+          title={'Add Todo'}
           onSubmit={(e) => handleSubmit(e)}
         />
       </div>
