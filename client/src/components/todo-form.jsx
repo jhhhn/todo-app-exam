@@ -46,16 +46,13 @@ const TodoForm = ({ dataTodo }) => {
   }
 
   return (
-    <form
-      onSubmit={(e) => handleSubmit(e)}
-      className='flex items-center justify-between'
-    >
-      <div className='flex items-center'>
+    <form onSubmit={(e) => handleSubmit(e)}>
+      <div className='flex items-center justify-between '>
         <InputText
           handleChange={handleChange}
           placeholder='Add todo'
           value={state.title}
-          className='card p-4 w-96'
+          className='card p-4 w-60 md:w-96'
         />
         <CustomBtn
           className='p-4 ml-4 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none'

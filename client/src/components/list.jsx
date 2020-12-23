@@ -22,12 +22,16 @@ const List = ({ todos, setUpdateTodo }) => {
             key={i.id}
             className={`${
               i.completed ? 'border-green-500' : 'border-red-500'
-            } card hover:shadow-md flex items-center justify-between border-l-4`}
+            } card hover:shadow-md flex items-center justify-between  border-b-4 md:border-b-0 md:border-l-4 flex-col md:flex-row`}
           >
-            <span className={`${i.completed ? 'line-through' : ''}`}>
+            <span
+              className={`${
+                i.completed ? 'line-through' : ''
+              } md:w-96 lg:w-auto break-words  px-8 py-4`}
+            >
               {i.title}
             </span>
-            <div>
+            <div className='md:block'>
               <CustomBtn
                 className='btn bg-blue-500 hover:bg-opacity-80 '
                 type={'button'}
