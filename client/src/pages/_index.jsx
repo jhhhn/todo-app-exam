@@ -104,8 +104,10 @@ const Index = () => {
       </div>
       <Modal ref={modalRef}>
         {dataTodo && (
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <h1>Update Todo</h1>
+          <form onSubmit={(e) => handleSubmit(e)} className='font-mono'>
+            <h1 className='text-2xl font-semibold'>
+              {dataTodo.edit ? 'Update todo' : 'Add todo'}
+            </h1>
             <div className='flex items-center justify-between '>
               <InputText
                 handleChange={handleChange}
@@ -114,7 +116,7 @@ const Index = () => {
                 className='card p-4 w-60 md:w-96'
               />
               <CustomBtn
-                className='p-4 ml-4 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none'
+                className='p-2 ml-4 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none bg-blue-500 text-gray-100 tracking-widest text-xl'
                 type={'submit'}
                 title={`${dataTodo.edit ? 'Update' : 'Add'}`}
                 onSubmit={(e) => handleSubmit(e)}
