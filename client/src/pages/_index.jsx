@@ -29,7 +29,9 @@ const Index = () => {
   })
 
   useEffect(() => {
-    dispatch(getTodos(state.skip, state.limit, state.completeFilter))
+    if (todos.length === 0) {
+      dispatch(getTodos(state.skip, state.limit, state.completeFilter))
+    }
   }, [])
 
   const openModal = (data) => {
@@ -118,7 +120,7 @@ const Index = () => {
         </div>
       </header>
 
-      <Filter filterTodo={filterTodo} />
+      <Filter filterTodo={filterTodo} loading={loading} />
       <List todos={todos} setUpdateTodo={openModal} />
       <h1>Showing {todos.length} of 200</h1>
       <LoadMore loading={loading} limit={state.limit} loadMore={loadMore} />

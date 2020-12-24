@@ -37,6 +37,8 @@ export const getTodos = (
   completeFilter,
   previousState = []
 ) => async (dispatch) => {
+  /* ------------ due to limitation of jsonplaceholder i use get req instead post req ------------ */
+
   try {
     dispatch({
       type: TodoConstant.TODOS_REQUEST,

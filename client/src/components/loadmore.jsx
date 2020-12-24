@@ -7,7 +7,15 @@ const LoadMore = ({ loadMore, loading, limit }) => {
       {loading ? (
         <Loading />
       ) : (
-        200 > 0 && 200 >= limit && <h4 onClick={() => loadMore()}>Load more</h4>
+        200 > 0 &&
+        200 >= limit && (
+          <h4
+            className='hover:text-gray-400 cursor-pointer text-xl'
+            onClick={() => loadMore()}
+          >
+            Load more
+          </h4>
+        )
       )}
     </div>
   )

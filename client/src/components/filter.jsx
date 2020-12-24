@@ -1,12 +1,14 @@
 import React from 'react'
 import CustomBtn from './button'
+import Loading from './loading'
 
-const Filter = ({ filterTodo }) => {
+const Filter = ({ filterTodo, loading }) => {
   const handleFilter = (data) => {
     filterTodo(data)
   }
   return (
     <div className='flex justify-end items-center'>
+      {loading && <Loading />}
       <CustomBtn
         className='p-2 cursor-pointer shadow-md hover:shadow-inner rounded-md flex-none bg-gray-500 text-gray-200 font-extrabold
            tracking-widest m-3'
