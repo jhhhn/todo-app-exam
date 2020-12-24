@@ -31,30 +31,55 @@ export const deleteTodo = (id) => ({
   payload: id,
 })
 
-export const getTodos = (isComplete) => async (dispatch) => {
+export const getTodos = (
+  skip,
+  limit,
+  completeFilter,
+  previousState = []
+) => async (dispatch) => {
   try {
     dispatch({
       type: TodoConstant.TODOS_REQUEST,
     })
-    if (isComplete !== null) {
+
+    if (previousState && completeFilter !== null) {
+      const data = await Axios.get(
+        `/todos?completed=${completeFilter}&_start=${skip}&_limit=${limit}`
+      ).then((res) => {
+        let newState = [...previousState, ...res.data]
+        return newState
+      })
+      dispatch({
+        type: TodoConstant.GET_TODOS,
+        payload: data,
+      })
+    } else if (completeFilter !== null && !previousState) {
       const { data } = await Axios.get(
-        `/todos?completed=${isComplete}&_limit=10`
+        `/todos?completed=${completeFilter}&_start=${skip}&_limit=${limit}`
       )
       dispatch({
         type: TodoConstant.GET_TODOS,
         payload: data,
       })
+    } else if (completeFilter === null && previousState) {
+      const data = await Axios.get(
+        `/todos?_start=${skip}&_limit=${limit}`
+      ).then((res) => {
+        let newState = [...previousState, ...res.data]
+        return newState
+      })
+      dispatch({
+        type: TodoConstant.GET_TODOS,
+        payload: data,
+      })
     } else {
-      const { data } = await Axios.get(`/todos?_limit=10`)
+      const { data } = await Axios.get(`/todos?_start=${skip}&_limit=${limit}`)
       dispatch({
         type: TodoConstant.GET_TODOS,
         payload: data,
       })
     }
   } catch (error) {
-    dispatch({
-      type: TodoConstant.TODOS_FAIL,
-      payload: error.response && error.message,
-    })
+    console.log(error)
   }
 }

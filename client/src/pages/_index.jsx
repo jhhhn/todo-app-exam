@@ -7,12 +7,19 @@ import Modal from '../components/modal'
 import CustomBtn from '../components/button'
 import InputText from '../components/input_text'
 import Filter from '../components/filter'
+import LoadMore from '../components/loadmore'
 
 const Index = () => {
   const dispatch = useDispatch()
   const modalRef = useRef()
   const todosState = useSelector(({ todos }) => todos)
-  const { loading, todos, error } = todosState
+  const { loading, todos } = todosState
+
+  const [state, setstate] = useState({
+    skip: 0,
+    limit: 5,
+    completeFilter: null,
+  })
 
   const [dataTodo, setDataTodo] = useState({
     edit: false,
@@ -22,7 +29,7 @@ const Index = () => {
   })
 
   useEffect(() => {
-    dispatch(getTodos(null))
+    dispatch(getTodos(state.skip, state.limit, state.completeFilter))
   }, [])
 
   const openModal = (data) => {
@@ -67,6 +74,28 @@ const Index = () => {
     }
   }
 
+  const loadMore = () => {
+    let skip = state.skip + state.limit
+    dispatch(getTodos(skip, state.limit, state.completeFilter, todos)).then(
+      () => {
+        setstate({
+          ...state,
+          skip: skip,
+        })
+      }
+    )
+  }
+
+  const filterTodo = (completed) => {
+    dispatch(getTodos(0, state.limit, completed)).then(() => {
+      setstate({
+        ...state,
+        skip: 0,
+        completeFilter: completed,
+      })
+    })
+  }
+
   return (
     <div>
       <header>
@@ -89,19 +118,11 @@ const Index = () => {
         </div>
       </header>
 
-      <Filter />
+      <Filter filterTodo={filterTodo} />
+      <List todos={todos} setUpdateTodo={openModal} />
+      <h1>Showing {todos.length} of 200</h1>
+      <LoadMore loading={loading} limit={state.limit} loadMore={loadMore} />
 
-      <div>
-        {error ? (
-          <h1>Error</h1>
-        ) : (
-          <List todos={todos} setUpdateTodo={openModal} />
-        )}
-      </div>
-
-      <div className='pb-8 m-8 flex justify-center'>
-        {loading && <Loading />}
-      </div>
       <Modal ref={modalRef}>
         {dataTodo && (
           <form onSubmit={(e) => handleSubmit(e)} className='font-mono'>

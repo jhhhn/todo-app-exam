@@ -1,12 +1,9 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { getTodos } from '../redux/todo/todo-actions'
 import CustomBtn from './button'
 
-const Filter = () => {
-  const dispatch = useDispatch()
+const Filter = ({ filterTodo }) => {
   const handleFilter = (data) => {
-    dispatch(getTodos(data))
+    filterTodo(data)
   }
   return (
     <div className='flex justify-end items-center'>

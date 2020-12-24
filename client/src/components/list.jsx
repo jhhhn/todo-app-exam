@@ -16,7 +16,8 @@ const List = ({ todos, setUpdateTodo }) => {
 
   return (
     <ul>
-      {todos.length > 0 &&
+      {todos &&
+        todos.length > 0 &&
         todos.map((i) => (
           <li
             key={i.id}
@@ -29,7 +30,7 @@ const List = ({ todos, setUpdateTodo }) => {
                 i.completed ? 'line-through' : ''
               } md:w-96 lg:w-auto break-words  px-8 py-4`}
             >
-              {i.title}
+              {i.id} - {i.title}
             </span>
             <div className='md:block'>
               <CustomBtn

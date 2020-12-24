@@ -1,11 +1,5 @@
 import TodoConstant from './todo-constant'
-import {
-  todoDelete,
-  todoUpdate,
-  addTodo,
-  markComplete,
-  todoFilter,
-} from './todo-utils'
+import { todoDelete, todoUpdate, addTodo, markComplete } from './todo-utils'
 
 const INITIAL_STATE = {
   todos: [],
@@ -24,7 +18,7 @@ const todos = (state = INITIAL_STATE, { type, payload }) => {
     case TodoConstant.GET_TODOS:
       return {
         ...state,
-        todos: [...payload],
+        todos: payload,
         success: true,
         loading: false,
       }
@@ -73,7 +67,7 @@ const todos = (state = INITIAL_STATE, { type, payload }) => {
     case TodoConstant.TODOS_FAIL:
       return {
         ...state,
-        error: 'Error in todo',
+        error: payload,
         success: false,
         loading: false,
       }
